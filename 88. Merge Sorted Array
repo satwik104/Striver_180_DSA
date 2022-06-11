@@ -1,0 +1,80 @@
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        /*
+        //bruteforce
+        //copy all elements of nums2 in nums1 
+        for(int i=0;i<n;i++)
+        {
+            nums1[m+i]=nums2[i];
+        }
+        //now sort it
+       sort(nums1.begin(), nums1.end());
+    }*/
+    /*
+      TC :0(m+n)log(m+n) [for sorting the array] + 0(n)[for copying the elements of nums2 to           nums1]
+      So, overall TC : 0(m+n) log(m+n)
+      SC: 0(1)
+    */
+    /***********************APPROACH 2(using space)**************************/
+        /*
+    vector<int> help(n+m);
+    int k=0;
+    for(int i=0;i<m;i++)
+        help[k++]=nums1[i];
+    for(int j=0;j<n;j++)
+        help[k++]=nums2[j];
+    //we put all the numbers from both vectors in help now we sort it
+    sort(help.begin(),help.end());
+    k=0;
+    for(int i=0;i<n+m;i++)
+    {
+        nums1[i]=help[k++];
+    }
+    TC = O(n)+O(m)+O(n+m)  SC = O(n+m)
+*/
+        
+        /******************APPROACH 3(Insertion sort used)********************/
+        /*
+        for(int i=0;i<m;i++)
+        {
+            if(nums1[i]>nums2[0])
+                swap(nums1[i],nums2[0]);
+            //now sort nums2 again as new element is entered in it
+            //using insertion sort
+            int first=nums2[0],k;
+            for(k=1;k<n and nums2[k]<first;k++)
+                nums2[k-1]=nums2[k];
+            nums2[k-1]=first;
+            //now both array are sorted we just place nums2 elements in nums1
+            int j=0;
+            for(int i=n;i<n+m;i++)
+                nums1[i]=nums2[j++];
+                TC = O(n*m) SC = O(1)
+        }*/
+        /******************APPROACH 4(GAP METHOD)********************/
+        int gap=ceil((float)(n+m)/2);
+        while(gap>0)
+        {
+            int i=0,j=gap;
+            while(j<(n+m))
+            {
+                if(j<m and nums1[i]>nums1[j])
+                    swap(nums1[i],nums1[j]);
+                else if(j>=m and i<m and nums1[i]>nums2[j-n])
+                    swap(nums1[i],nums2[j-m]);
+                else if(j>=m and i>=m and nums2[i-m]>nums2[j-m])
+                    swap(nums2[i-m],nums2[j-m]);
+                i++;
+                j++;
+            }
+            if(gap==1)
+                  gap=0;
+            else
+                  gap=ceil((float)gap/2);
+        }
+        int k=m;
+            for(int j=0;j<n;j++)
+                nums1[k++]=nums2[j];
+}
+};
