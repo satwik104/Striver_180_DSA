@@ -1,0 +1,14 @@
+BEST SOLUTION USING BINOMIAL FORMULA AND COMBINATIONS APPROACH
+WATCH STRIVER EXPLAINATION
+TC : O(n-1) or O(m-1) SC : O(1)
+PLEASE UPVOTE
+
+ int uniquePaths(int m, int n) {
+        int N = m+n-2;
+        int r = m-1;
+        double res = 1;
+        for(int i=1;i<=r;i++)
+            res=res*(N-r+i)/i;
+        return(int)res;
+    }
+Better then DP and Recursive approach
