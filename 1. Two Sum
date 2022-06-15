@@ -1,0 +1,66 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        //BRUEFORCE SOLUTION O(N^2)
+        /*
+        int N = nums.size();
+			for(int i = 0; i < N; ++i) {
+				for(int j = i + 1; j < N; ++j){
+					if(nums[i] + nums[j] == target) {return {i, j};}
+				}
+			}
+			return {};//if we did'nt find any thing to return 
+            */
+        //another approach first sort the array then apply two pointer
+        //once we find the ans run another loop to know about the orignal index then return it
+        //O(nlogn) +O(n) time complexity
+        /*
+       vector<int> res,store;
+    	store = nums;
+
+    	sort(store.begin(), store.end());
+
+    	int left=0,right=nums.size()-1;
+    	int n1,n2;
+
+    	while(left<right){
+        	if(store[left]+store[right]==target){
+
+            	n1 = store[left];
+            	n2 = store[right];
+
+            	break;
+
+        	}
+        	else if(store[left]+store[right]>target)
+            	    right--;
+        	else
+            	    left++;
+    	}
+
+    	for(int i=0;i<nums.size();++i){
+
+        	if(nums[i]==n1)
+            	    res.emplace_back(i);
+        	else if(nums[i]==n2)
+            	    res.emplace_back(i);
+    	}
+
+    	    return res;
+            */
+        /*******************OPTIMAL APPROACH***************/
+        vector<int> ans;
+        unordered_map<int,int> map;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(map.find(target-nums[i])!=map.end())
+            {
+                ans.push_back(i);
+                ans.push_back(map[target-nums[i]]);
+                return ans;
+            }
+            map[nums[i]]=i;
+        }
+        return ans;
+    }
+};
