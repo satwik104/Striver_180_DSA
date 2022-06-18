@@ -1,0 +1,31 @@
+#include <bits/stdc++.h> 
+int subarraysXor(vector<int> &arr, int x)
+{
+   //bruteforce O(n^2)
+    /*
+    long long int c=0;
+    for(int i=0;i<arr.size();i++)
+    {
+        int current_xor = 0;
+        for(int j=i;j<arr.size();j++)
+        {
+            current_xor=current_xor ^ arr[j];
+            if(current_xor==x) c++;
+        }
+    }
+    return c;
+    */
+    //optimal approach O(nlogn)
+    unordered_map<int,int> map;
+    int cnt=0,cpx=0;
+    for(int i=0;i<arr.size();i++)
+    {
+        cpx^=arr[i];
+        if(cpx==x) cnt++;
+        int h=cpx^x;
+        if(map.find(h)!=map.end())
+            cnt+=map[h];
+        map[cpx]++;
+    }
+    return cnt;
+}
